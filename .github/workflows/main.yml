@@ -13,4 +13,7 @@ jobs:
       run: |
         LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
         echo "Latest tag label is $LATEST_TAG"
-        echo "::set-output name=tag_label::$LATEST_TAG"
+    - name: Set new Tag
+      id: set_tag
+      run: |
+        echo "##[set-output name=tag;]$(echo ${{ steps.latest_tag.outputs.LATEST_TAG }} | awk -F. -v OFS=. '{$NF++;print}')"
