@@ -19,4 +19,5 @@ def login():
         return redirect(url_for('success', name=user))
     else:
         user = request.args.get('nm')
-        return redirect(url_for('success', name=user)) 
+        return redirect(url_for('success', name=user))
+    #this is 1.1
