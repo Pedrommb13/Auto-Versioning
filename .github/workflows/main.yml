@@ -11,7 +11,7 @@ jobs:
     - name: Get latest tag
       id: latest_tag
       run: |
-        $LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+        echo $(git describe --tags $(git rev-list --tags --max-count=1)) >> $LATEST_TAG
         echo "Latest tag label is $LATEST_TAG"
     - name: New tag
       id: new_tag
