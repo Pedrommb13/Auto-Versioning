@@ -4,11 +4,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Get latest release
-        id: latest_release
-        run: |
-          LATEST_RELEASE_LABEL=$(curl --silent --show-error --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' "https://api.github.com/repos/${{ github.repository }}/releases/latest" | jq -r .tag_name)
-          echo "Latest release label is $LATEST_RELEASE_LABEL"
-          echo "::set-output name=release_label::$LATEST_RELEASE_LABEL"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Get latest tag
+      id: latest_tag
+      run: |
+        LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+        echo "Latest tag label is $LATEST_TAG"
+        echo "::set-output name=tag_label::$LATEST_TAG"
