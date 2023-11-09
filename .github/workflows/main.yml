@@ -4,15 +4,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-      - name: Versioning
-      
-      - name: Create Release
-        uses: meeDamian/github-release@2.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          # names the release after the head commit
-          name: ${{ github.event.head_commit.message }}
-          tag: ${{ steps.Versioning.outputs.tag }}
-          gzip: false
+      - name: Get latest release
+        id: latest_release
+        run: |
+          LATEST_RELEASE_LABEL=$(curl --silent --show-error --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' "https://api.github.com/repos/${{ github.repository }}/releases/latest" | jq -r .tag_name)
+          echo "Latest release label is $LATEST_RELEASE_LABEL"
+          echo "::set-output name=release_label::$LATEST_RELEASE_LABEL"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
