@@ -1,0 +1,18 @@
+name: 'Auto Versioning'
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Versioning
+      
+      - name: Create Release
+        uses: meeDamian/github-release@2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # names the release after the head commit
+          name: ${{ github.event.head_commit.message }}
+          tag: ${{ steps.Versioning.outputs.tag }}
+          gzip: false
