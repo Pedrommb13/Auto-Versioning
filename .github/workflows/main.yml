@@ -1,12 +1,10 @@
 name: 'Auto Versioning'
 on:
   push:
-    branches:
-      - main
+    branches-ignore: [main]
   pull_request:
     types: [closed]
-    branches:
-      - main
+    branches: [main]
 jobs:
   build:
     runs-on: ubuntu-latest
