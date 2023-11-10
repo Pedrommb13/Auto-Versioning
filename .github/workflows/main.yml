@@ -20,9 +20,9 @@ jobs:
         NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$1 = $1; $2 = $2 + 1;} 1' OFS=.)
         echo "New tag label is $NEW_TAG"
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
-    - name: Push Git Tag
+    - name: Push Git Tag  
       run: |
-        git config user.name "Pedrommb13"
-        git config user.email "pedrommbb@gmail.com"
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "github-actions@users.noreply.github.com"
         git tag $NEW_TAG
-        git push https://${{ secrets.GITHUB_TOKEN }}@github.com/Pedrommb13/versioning_test.git --tags
+        git push https://${{ secrets.GPG_KEY }}@github.com/Pedrommb13/versioning_test.git --tags
