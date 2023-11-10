@@ -14,24 +14,20 @@ jobs:
       run: |
         VERSION_NUM='[0-999]' 
         LATEST_TAG=$(git tag --list "${VERSION_NUM}\.${VERSION_NUM}" --sort=-version:refname | head -n 1)
-        echo "Latest tag label is $LATEST_TAG"
         echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
     - name: New tag minor
       id: new_tag_minor
       if: github.event_name == 'push' && github.ref != 'refs/heads/main'
       run: |
         NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$1 = $1; $2 = $2 + 1;} 1' OFS=.)
-        echo "New tag label is $NEW_TAG"
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
     - name: New tag major
       id: new_tag_major
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       run: |
         NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$1 = $1 + 1; $2 = 0;} 1' OFS=.)
-        echo "New tag label is $NEW_TAG"
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
     - name: Push Git Tag  
       run: |
         git tag $NEW_TAG
         git push origin $NEW_TAG
-    #Carla
