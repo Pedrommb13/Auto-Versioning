@@ -20,8 +20,7 @@ jobs:
         NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$1 = $1; $2 = $2 + 1;} 1' OFS=.)
         echo "New tag label is $NEW_TAG"
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
-        ls -la
-        cd .git
+        cd .git/refs/heads
         ls -la
     - name: Push Git Tag  
       run: |
