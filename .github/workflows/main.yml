@@ -1,5 +1,8 @@
 name: 'Auto Versioning'
-on: push
+on: 
+  push:
+    tags-ignore:
+    - '*.0'
 jobs:
   build:
     runs-on: ubuntu-latest
