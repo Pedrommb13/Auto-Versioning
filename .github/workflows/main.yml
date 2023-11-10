@@ -30,7 +30,7 @@ jobs:
       id: new_tag_major
       if: github.event_name == 'pull_request'
       run: |
-        NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$1 = $1 + 1; $2 = 0;} 1' OFS=.)
+        NEW_TAG=$(echo $LATEST_TAG | (git tag --list "${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.*" --sort=-version:refname | head -n 1 | grep -oE '[0-9]+$'))
         echo "New tag label is $NEW_TAG"
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
     - name: Push Git Tag  
