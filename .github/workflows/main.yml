@@ -22,7 +22,5 @@ jobs:
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
     - name: Push Git Tag  
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "github-actions@users.noreply.github.com"
         git tag $NEW_TAG
         git push origin $NEW_TAG
