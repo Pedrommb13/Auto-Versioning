@@ -1,10 +1,10 @@
 name: 'Auto Versioning'
 on:
   push:
-    branches-ignore: [main]
-  pull_request:
-    types: [closed]
     branches: [main]
+  # pull_request:
+  #   types: [closed]
+  #   branches: [main]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,7 +16,8 @@ jobs:
     - name: Get latest tag
       id: latest_tag
       run: |
-        LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+        VERSION_NUM='[0-9]+'
+        LATEST_TAG=$(git tag --list "${VERSION_NUM}.${VERSION_NUM}" --sort=-version:refname)
         echo "Latest tag label is $LATEST_TAG"
         echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
     - name: New tag minor
@@ -30,7 +31,7 @@ jobs:
       id: new_tag_major
       if: github.event_name == 'pull_request'
       run: |
-        NEW_TAG=$(echo $LATEST_TAG | (git tag --list "${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.*" --sort=-version:refname | head -n 1 | grep -oE '[0-9]+$'))
+        NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$1 = $1 + 1; $2 = 0;} 1' OFS=.)
         echo "New tag label is $NEW_TAG"
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
     - name: Push Git Tag  
