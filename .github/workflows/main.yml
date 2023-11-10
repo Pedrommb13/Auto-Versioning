@@ -21,6 +21,8 @@ jobs:
         echo "New tag label is $NEW_TAG"
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
         ls -la
+        cd .git
+        ls -la
     - name: Push Git Tag  
       run: |
         git config --global user.name "GitHub Actions"
