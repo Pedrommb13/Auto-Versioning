@@ -20,4 +20,4 @@ def login():
     else:
         user = request.args.get('nm')
         return redirect(url_for('success', name=user))
-    #this is 4.wayefçgçoihgew
+    #this is 4.wagewgwew
