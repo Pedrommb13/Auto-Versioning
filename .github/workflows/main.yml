@@ -20,8 +20,13 @@ jobs:
         NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$1 = $1; $2 = $2 + 1;} 1' OFS=.)
         echo "New tag label is $NEW_TAG"
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
-        cd .git/refs
-        ls -la
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '12' 
+    - name: Node Install
+      run: npm ci
+    - name: Node Build (lint, test, coverage, doc, build, package)
+      run: npm run package
     - name: Push Git Tag  
       run: |
         git config --global user.name "GitHub Actions"
