@@ -21,8 +21,6 @@ jobs:
         echo "New tag label is $NEW_TAG"
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
     - uses: actions/setup-node@v4.0.0
-      with:
-        node-version: '12' 
     - name: Node Install
       run: npm ci
     - name: Node Build (lint, test, coverage, doc, build, package)
