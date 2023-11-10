@@ -12,7 +12,7 @@ jobs:
     - name: Get latest tag
       id: latest_tag
       run: |
-        VERSION_NUM='[0-9]\+' 
+        VERSION_NUM='[0-999]' 
         LATEST_TAG=$(git tag --list "${VERSION_NUM}\.${VERSION_NUM}" --sort=-version:refname | head -n 1)
         echo "Latest tag label is $LATEST_TAG"
         echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
