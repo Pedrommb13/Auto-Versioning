@@ -15,9 +15,9 @@ jobs:
         PREFIX='v'
         VERSION_NUM='[0-999]' 
         LATEST_TAG=$(git tag --list "${PREFIX}${VERSION_NUM}\.${VERSION_NUM}" --sort=-version:refname | head -n 1)
-        echo "LASTEST_TAG"
-        LASTEST_TAG=${LATEST_TAG#"$prefix"}
-        echo "LASTEST_TAG"
+        echo "$LASTEST_TAG"
+        
+        echo "$LASTEST_TAG"
         echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
     - name: New tag minor
       id: new_tag_minor
