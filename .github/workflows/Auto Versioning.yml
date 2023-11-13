@@ -21,14 +21,14 @@ jobs:
         echo "$LATEST_TAG"
     - name: New tag minor
       id: new_tag_minor
-      if: github.event_name == 'push' && github.ref != 'refs/heads/main'
+      if: github.ref != 'refs/heads/main'
       run: |
         NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$1 = $1; $2 = $2 + 1;} 1' OFS=.)
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
         echo "$NEW_TAG"
     - name: New tag major
       id: new_tag_major
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      if: github.ref == 'refs/heads/main'
       run: |
         NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$1 = $1 + 1; $2 = 0;} 1' OFS=.)
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
