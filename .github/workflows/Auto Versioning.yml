@@ -12,8 +12,10 @@ jobs:
     - name: Get latest tag
       id: latest_tag
       run: |
+        PREFIX='v'
         VERSION_NUM='[0-999]' 
-        LATEST_TAG=$(git tag --list "${VERSION_NUM}\.${VERSION_NUM}" --sort=-version:refname | head -n 1)
+        LATEST_TAG=$(git tag --list "${PREFIX}${VERSION_NUM}\.${VERSION_NUM}" --sort=-version:refname | head -n 1)
+        LASTEST_TAG=${LATEST_TAG#$PREFIX}
         echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
     - name: New tag minor
       id: new_tag_minor
@@ -29,5 +31,7 @@ jobs:
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
     - name: Push Git Tag  
       run: |
+        NEW_TAG=${{ env.NEW_TAG }}
+        NEW_TAG="v$NEW_TAG"
         git tag $NEW_TAG
         git push origin $NEW_TAG
