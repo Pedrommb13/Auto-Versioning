@@ -32,7 +32,7 @@ jobs:
       run: |
         NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$1 = $1 + 1; $2 = 0;} 1' OFS=.)
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
-    - name: Push Git Tag  
+    - name: Push Git Tag
       run: |
         NEW_TAG=${{ env.NEW_TAG }}
         NEW_TAG="v$NEW_TAG"
