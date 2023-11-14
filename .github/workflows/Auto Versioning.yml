@@ -25,8 +25,9 @@ jobs:
           LATEST_TAG="0.0.0"
         fi
         LATEST_TAG=${LATEST_TAG#$PREFIX}
-        echo "COMMIT_MSG=$(git log --format=%B -n 1)" >> $GITHUB_ENV
-        echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+        COMMIT_MSG=$(git log --format=%B -n 1)
+        echo COMMIT_MSG=$(printf '%s\n' "$COMMIT_MSG") >> $GITHUB_ENV
+        echo LATEST_TAG=$LATEST_TAG >> $GITHUB_ENV
 
     - name: New tag minor
       id: new_tag_minor
