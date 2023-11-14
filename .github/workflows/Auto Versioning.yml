@@ -1,6 +1,7 @@
 name: 'Auto Versioning'
 on:
   push:
+    
 jobs:
   build:
     runs-on: ubuntu-latest
