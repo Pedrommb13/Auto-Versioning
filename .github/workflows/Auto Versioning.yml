@@ -15,8 +15,8 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Get latest tag
-      id: latest_tag
+    - name: Get latest tag and commit msg
+      id: Tag_and_msg
       run: |
         PREFIX='v'
         VERSION_NUM='[0-999]'
@@ -25,18 +25,19 @@ jobs:
           LATEST_TAG="0.0.0"
         fi
         LATEST_TAG=${LATEST_TAG#$PREFIX}
+        echo "COMMIT_MSG=$(git log --format=%B -n 1)" >> $GITHUB_ENV
         echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
 
     - name: New tag minor
       id: new_tag_minor
-      if: github.ref == 'refs/heads/main'
+      if: (startsWith(github.ref, 'refs/heads/feat') || contains(env.COMMIT_MSG, 'bugfix')) == false
       run: |
         NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$2 = $2 + 1; $3 = 0;} 1' OFS=.)
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
 
     - name: New tag patch
       id: new_tag_patch
-      if: github.ref != 'refs/heads/main'
+      if: startsWith(github.ref, 'refs/heads/feat') || contains(env.COMMIT_MSG, 'bugfix')
       run: |
         NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$3 = $3 + 1;} 1' OFS=.)
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
