@@ -5,7 +5,7 @@ on:
       - '**'
     tags-ignore:
       - '**'
-      
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,18 +27,18 @@ jobs:
         LATEST_TAG=${LATEST_TAG#$PREFIX}
         echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
 
-    - name: New tag patch
-      id: new_tag_patch
-      if: github.ref != 'refs/heads/main'
-      run: |
-        NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$3 = $3 + 1;} 1' OFS=.)
-        echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
-
     - name: New tag minor
       id: new_tag_minor
       if: github.ref == 'refs/heads/main'
       run: |
         NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$2 = $2 + 1; $3 = 0;} 1' OFS=.)
+        echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
+
+    - name: New tag patch
+      id: new_tag_patch
+      if: github.ref != 'refs/heads/main'
+      run: |
+        NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$3 = $3 + 1;} 1' OFS=.)
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
 
     - name: Push Git Tag
