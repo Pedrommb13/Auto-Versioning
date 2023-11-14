@@ -1,6 +1,9 @@
 name: 'Auto Versioning'
 on:
   push:
+    tags-ignore:
+      - '**'
+    
     
 jobs:
   build:
