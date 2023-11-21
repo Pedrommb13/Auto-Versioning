@@ -5,6 +5,8 @@ on:
       - '**'
     tags-ignore:
       - '**'
+  repository_dispatch:
+    types: [trigger-workflow-2]
 jobs:
   build:
     runs-on: ubuntu-latest
